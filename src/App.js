@@ -10,14 +10,14 @@ const App = () => {
       action: 'reacted to your recent post',
       other: 'My first tournament today!',
       time: '1m ago',
-      notified: false
+      notified: true
     },
     {
       user: 'Angela Gray',
       avatar: 'avatar-angela-gray.webp',
       action: 'followed you',
       time: '5m ago',
-      notified: false
+      notified: true
     },
     {
       user: 'Jacob Thompson',
@@ -25,7 +25,7 @@ const App = () => {
       action: 'has joined your group',
       other: 'Chess Club',
       time: '1 day ago',
-      notified: false
+      notified: true
     },
     {
       user: 'Rizky Hasanuddin',
@@ -33,22 +33,23 @@ const App = () => {
       action: 'sent you a private message',
       other: 'Hello, thanks for setting up the Chess Club ...',
       time: '5 days ago',
-      notified: true
+      type: 'message',
+      notified: false
     },
     {
       user: 'Kimberly Smith',
       avatar: 'avatar-kimberly-smith.webp',
       action: 'commented on your picture',
       time: '1 week ago',
-      notified: true
+      notified: false
     },
     {
       user: 'Nathan Peterson',
       avatar: 'avatar-nathan-peterson.webp',
       action: 'reacted to your recent post',
-      other: '5 end-game strategies to increase your win rate',
+      other: '5 end-game strategies ...',
       time: '2 weeks ago',
-      notified: true
+      notified: false
     },
     {
       user: 'Anna Kim',
@@ -56,7 +57,7 @@ const App = () => {
       action: 'left the group',
       other: 'Chess Club',
       time: '2 weeks ago',
-      notified: true
+      notified: false
     }
   ]
 
@@ -70,22 +71,42 @@ const App = () => {
         <div className="bottom">
           {
           notificationsArr.map((e) => {
-            return (
-              <div className={e.notified ? 'notified' : 'gray-bg'}>
-                <img src={e.avatar} alt="avatar" />
-                <h4>{e.user}</h4>
-                <p>{e.action}</p>
-                <p>{e.other}</p>
-                <p>{e.time}</p>
-
-              </div>
-            )
+            if (e.type !== 'message') {
+              return (
+                <div className={e.notified && notifications ? 'gray-bg' : 'notified'}>
+                  <img src={e.avatar} alt="avatar" />
+                  <div className='noti-text'>
+                    <div className="row-noti">
+                      <h4>{e.user}</h4>
+                      <p className="second-text">{e.action}</p>
+                      <h4 className="third-text">{e.other}</h4>
+                      {e.notified && notifications ? <div className="noti-symbol"></div> : ''}
+                    </div>
+                  <p className="time">{e.time}</p>
+                  </div>
+                </div>
+              )
+            } else {
+              return (
+                <div className="dm-container">
+                  <img src={e.avatar} alt="avatar" />
+                  <div className='dm-text'>
+                    <div className="row-noti">
+                      <h4>{e.user}</h4>
+                      <p className="second-text">{e.action}</p>
+                    </div>
+                    <p className="time">{e.time}</p>
+                    <p className="dm-content">{e.other}</p>
+                  </div>
+                </div>
+              )
+            }
           })
           }
         </div>
       </div>
     </>
   );
-}
+};
 
 export default App;
